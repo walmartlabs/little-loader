@@ -1,0 +1,38 @@
+{
+  "name": "little-loader",
+  "version": "0.0.1",
+  "description": "A lightweight, IE8+ JavaScript loader.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/walmartlabs/little-loader.git"
+  },
+  "contributors": [
+    {
+      "name": "Brian Beck",
+      "email": "brian.beck@formidable.com"
+    },
+    {
+      "name": "Ryan Roemer",
+      "email": "ryan.roemer@formidable.com"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/walmartlabs/little-loader/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^1.10.1",
+    "eslint-config-defaults": "^7.1.1",
+    "eslint-plugin-filenames": "^0.2.0"
+  },
+  "scripts": {
+    "lint-client": "eslint -c .eslintrc-client lib",
+    "lint-server": "eslint -c .eslintrc-server *.js",
+    "lint-server-test": "eslint -c .eslintrc-server-test test/js/spec test/adapters/node.js",
+    "lint": "npm run lint-client && npm run lint-server && npm run lint-server-test",
+    "check": "npm run lint",
+    "check-ci": "npm run lint"
+  }
+}
