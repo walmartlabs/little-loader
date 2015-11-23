@@ -46,6 +46,15 @@ After that, run the full lint + tests:
 $ npm run check
 ```
 
+You can try out the live functional tests fixtures with our static server:
+
+```sh
+$ npm run server
+```
+
+and navigate to: http://127.0.0.1:3001/test/func/fixtures/
+
+
 [trav_img]: https://api.travis-ci.org/walmartlabs/little-loader.svg
 [trav_site]: https://travis-ci.org/walmartlabs/little-loader
 [sauce]: https://saucelabs.com

@@ -3,21 +3,23 @@
 var base = require("./base.spec");
 
 describe("basic", function () {
-  it("TODO IMPLEMENT A TEST", function (done) {
-    base.adapter.client
-      .url("http://backbone-testing.com/notes/app/")
+  it("loads basic script", function (done) {
+    var url = base.appUrl + "test/func/fixtures/basic.html";
 
-      // Create a note.
-      .setValue("input#note-new-input", "Delete Test")
-      .click("button#note-create")
-      .getText(".notes-item .note-title").then(function (text) {
-        expect(text).to.equal("Delete Test");
+    base.adapter.client
+      .url(url)
+
+      // Check errors
+      .getText("#error").then(function (text) {
+        expect(text).to.not.be.ok;
       })
 
-      // Delete a note
-      .click(".notes-item .note-delete")
-      .isExisting(".notes-item .note-delete").then(function (exists) {
-        expect(exists).to.be.false;
+      // Verify load
+      .getText("#content #basic-script").then(function (text) {
+        expect(text).to.equal("Basic Script");
+      })
+      .getText("#content #after-load").then(function (text) {
+        expect(text).to.equal("After Load");
       })
 
       .finally(base.promiseDone(done));
