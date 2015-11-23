@@ -15,6 +15,7 @@ build
 */build
 coverage
 Procfile
+temp
 
 # NPM
 test

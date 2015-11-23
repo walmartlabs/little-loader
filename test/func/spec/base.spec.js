@@ -31,7 +31,7 @@ adapter.after();
 
 before(function (done) {
   // The `adapter.before();` call has the side effect of instantiating a
-  // Selenium / WD.js client that we can extract here.
+  // Selenium / webdriver client that we can extract here.
   // Set a global Selenium timeout that is _before_ our test timeout.
   adapter.client
     .timeouts("implicit", 200)
@@ -64,22 +64,9 @@ var server;
 var realServer;
 
 // ----------------------------------------------------------------------------
-// Globals
-// ----------------------------------------------------------------------------
-before(function () {
-  // Export global base server URL for tests to hit.
-  global.TEST_FUNC_BASE_URL = process.env.TEST_FUNC_BASE_URL ||
-    "http://" + APP_HOST + ":" + APP_PORT + "/";
-});
-
-// ----------------------------------------------------------------------------
 // App server
 // ----------------------------------------------------------------------------
 before(function (done) {
-  // TODO: INVESTIGATE / DECIDE
-  // Travis starts up the server manually.
-  //if (process.env.TRAVIS === "true") { return done(); }
-
   server = httpServer.createServer();
   server.listen(APP_PORT, APP_HOST, done);
 
