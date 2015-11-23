@@ -38,6 +38,10 @@ script:
   # Run all base checks.
   - npm run check-ci
   - npm run test-func-sauce
+  # Safari runs into VM availability issues on Sauce.
+  # Run standalone _and_ serially.
+  # https://github.com/walmartlabs/little-loader/issues/5
+  - npm run test-func-sauce-safari
 
   # Manually send coverage reports to coveralls.
   # TODO: COVERALLS
