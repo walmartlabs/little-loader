@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fixture</title>
+  </head>
+  <body>
+    <div class="e2e-content"></div>
+    <div class="e2e-error"></div>
+    <script src="error-handler.js"></script>
+    <script src="../../../lib/little-loader.js"></script>
+    <script>
+      // Empty call.
+      window._lload();
+
+      // Loading scenario.
+      window._lload("advanced/first.js", function () {
+        var content = document.querySelector(".e2e-content");
+        content.innerHTML += "<div class='e2e-after-load-first'>After Load First</div>";
+
+        window._lload("advanced/third.js", function () {
+          content.innerHTML += "<div class='e2e-after-load-third'>After Load Third</div>";
+        });
+      });
+      window._lload("advanced/second.js", function () {
+        var content = document.querySelector(".e2e-content");
+        content.innerHTML += "<div class='e2e-after-load-second'>After Load Second</div>";
+      });
+    </script>
+  </body>
+</html>
