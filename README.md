@@ -31,6 +31,21 @@ Little loader attaches to `window._lload` for use in your JavaScript.
 </script>
 ```
 
+### Development
+
+Development requires two installation steps:
+
+```sh
+$ npm install
+$ npm run install-dev
+```
+
+After that, run the full lint + tests:
+
+```sh
+$ npm run check
+```
+
 [trav_img]: https://api.travis-ci.org/walmartlabs/little-loader.svg
 [trav_site]: https://travis-ci.org/walmartlabs/little-loader
 [sauce]: https://saucelabs.com

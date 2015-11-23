@@ -26,8 +26,8 @@ before_install:
 
 before_script:
   # Install dev. stuff (e.g., selenium drivers).
+  - npm run install-dev
   # TODO: FUNC TESTS
-  # - npm run install-dev
   # - nohup bash -c "node_modules/.bin/selenium-standalone start 2>&1 &"
   # - nohup bash -c "node_modules/.bin/http-server -a $TEST_FUNC_HOST -p $TEST_FUNC_PORT --silent 2>&1 &"
 

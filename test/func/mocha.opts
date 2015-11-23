@@ -1,0 +1,4 @@
+--require test/func/setup.js
+--reporter spec
+--ui bdd
+--timeout 20000
