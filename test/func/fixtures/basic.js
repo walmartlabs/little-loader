@@ -2,6 +2,6 @@
  * Basic script.
  */
 (function () {
-  var content = document.querySelector("#content");
-  content.innerHTML += "<div id='basic-script'>Basic Script</div>";
+  var content = document.querySelector(".e2e-content");
+  content.innerHTML += "<div class='e2e-basic-script'>Basic Script</div>";
 }());

@@ -4,14 +4,14 @@
     <title>Fixture</title>
   </head>
   <body>
-    <div id="content"></div>
-    <div id="error"></div>
+    <div class="e2e-content"></div>
+    <div class="e2e-error"></div>
     <script src="./error-handler.js"></script>
     <script src="../../../lib/little-loader.js"></script>
     <script>
       window._lload("basic.js", function () {
-        var content = document.querySelector("#content");
-        content.innerHTML += "<div id='after-load'>After Load</div>";
+        var content = document.querySelector(".e2e-content");
+        content.innerHTML += "<div class='e2e-after-load'>After Load</div>";
       });
     </script>
   </body>

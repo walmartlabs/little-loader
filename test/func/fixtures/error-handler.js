@@ -4,7 +4,7 @@
 (function () {
   /*eslint-disable max-params*/
   window.onerror = function (msg, file, line, col, error) {
-    var content = document.querySelector("#error");
+    var content = document.querySelector(".e2e-error");
     content.innerHTML += "<code>"
       + "msg: " + msg + "<br />\n"
       + "file: " + file + "<br />\n"

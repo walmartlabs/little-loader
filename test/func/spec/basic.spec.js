@@ -10,15 +10,15 @@ describe("basic", function () {
       .url(url)
 
       // Check errors
-      .getText("#error").then(function (text) {
+      .getText(".e2e-error").then(function (text) {
         expect(text).to.not.be.ok;
       })
 
       // Verify load
-      .getText("#content #basic-script").then(function (text) {
+      .getText(".e2e-basic-script").then(function (text) {
         expect(text).to.equal("Basic Script");
       })
-      .getText("#content #after-load").then(function (text) {
+      .getText(".e2e-after-load").then(function (text) {
         expect(text).to.equal("After Load");
       })
 
