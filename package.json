@@ -25,14 +25,26 @@
   "devDependencies": {
     "eslint": "^1.10.1",
     "eslint-config-defaults": "^7.1.1",
-    "eslint-plugin-filenames": "^0.2.0"
+    "eslint-plugin-filenames": "^0.2.0",
+    "expect.js": "^0.3.1",
+    "express": "^4.13.3",
+    "guacamole": "^1.1.4",
+    "mocha": "^2.3.4",
+    "phantomjs": "^1.9.18",
+    "rowdy": "^0.3.4",
+    "saucelabs": "^1.0.1",
+    "selenium-standalone": "^4.7.1",
+    "testarmada-magellan": "^3.0.3",
+    "webdriverio": "^3.2.6"
   },
   "scripts": {
     "lint-client": "eslint -c .eslintrc-client lib",
-    "lint-server": "eslint -c .eslintrc-server *.js",
-    "lint-server-test": "eslint -c .eslintrc-server-test test/js/spec test/adapters/node.js",
+    "lint-server": "eslint -c .eslintrc-server test/*.js",
+    "lint-server-test": "eslint -c .eslintrc-server-test test/spec",
     "lint": "npm run lint-client && npm run lint-server && npm run lint-server-test",
     "check": "npm run lint",
-    "check-ci": "npm run lint"
+    "check-ci": "npm run lint",
+    "install-selenium": "selenium-standalone install",
+    "test": "magellan"
   }
 }
