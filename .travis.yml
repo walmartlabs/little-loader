@@ -18,12 +18,6 @@ env:
     - SAUCE_CONNECT_VERSION=4.3.10
     - SAUCE_USERNAME=wml-little-loader
     - secure: t9yalh16COfTgMWI58MKD5cq3/4t1jiiGmRz7xmi5T4QkRkxYzATF+C60z2nXbnsF4RLflcRBgJZ0PbR/L2JxQ3yALasougJjb0EbVr8XoJQiyhnUEQpRxtoxn9oV9Fnp3/DDQduPTZ1zPzd20N7mOpYoqNMaVnMFj353fVzI3vph29/uakvR/nNCq7BNjcOll5+JRifpXFgsACWUalU+IR/R1xmrciw7KoLlHfe8Zy349X0mv3Ez2uugqsQ5CZnRI9vffNvIWXhuVU0sCoANydYS+d5vBjO5txrxZSv14enXFKBLaXkxViYmzQMHI2FDjx71KsKeCoGoH9ooSOfwPSXSrUFTRDN0nhow3Z3uqo3EjP/uJ0I+Hoe7gJWvUDw90Q1IX2WuoSxWU+fdgEewZyvQboaC6CSaF2rdvCfl058uIbcGhhkkGAmpwvJKSsytWOJjeTA3hpYPSHGlvVLvXER1bfAIC/iBf5VGBExotNrPSpG+PsqzhpUsFSmkjY5gpKElhcNW9Ag3r5IJJJL1xVu8aXO55T5VrmTn/jINEAo91nJZhHrjX7x0kPWzlvU5/JAAOjpcrOVfpvqjkpvmxev/JtPZl2cx8lHadPXYJw98hIagpQdkfojNI5C4ACSrTVNe/IoEujgykbh9egpe8HGsG+U+g6qogmFPQFUP/8=
-  matrix:
-    # Safari runs into VM availability issues on Sauce.
-    # Run as separate build, standalone, _and_ serially.
-    # https://github.com/walmartlabs/little-loader/issues/5
-    - SAUCE_SAFARI=true
-    - SAUCE_SAFARI=false
 
 before_install:
   # GUI for real browsers.
@@ -41,12 +35,12 @@ addons:
 
 script:
   # Run all base checks.
-  - if [ "$SAUCE_SAFARI" != true ]; then npm run check-ci; fi
-  - if [ "$SAUCE_SAFARI" != true ]; then npm run test-func-sauce; fi
+  - npm run check-ci
+  - npm run test-func-sauce
   # Safari runs into VM availability issues on Sauce.
-  # Run as separate build, standalone, _and_ serially.
+  # Run as standalone, serially, and grepped to just the advanced build.
   # https://github.com/walmartlabs/little-loader/issues/5
-  - if [ "$SAUCE_SAFARI" = true ]; then npm run test-func-sauce-safari; fi
+  - npm run test-func-sauce-safari
 
   # Manually send coverage reports to coveralls.
   # TODO: COVERALLS
