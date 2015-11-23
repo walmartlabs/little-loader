@@ -1,7 +1,7 @@
 ---
 extends:
-  - "defaults/configurations/walmart/es5-node"
   - "defaults/configurations/walmart/es5-test"
+  - "defaults/configurations/walmart/es5-node"
 
 globals:
   expect: false

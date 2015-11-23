@@ -5,10 +5,10 @@ A lightweight, IE8+ JavaScript loader.
 
 [![Travis Status][trav_img]][trav_site]
 
+[![Sauce Test Status][sauce_img]][sauce_site]
+
 <!--
 [![Coverage Status][cov_img]][cov_site]
-
-[![Sauce Test Status][sauce_img]][sauce_site]
 -->
 
 ### Goals
@@ -30,6 +30,30 @@ Little loader attaches to `window._lload` for use in your JavaScript.
   }/*, [optional context variable here] */);
 </script>
 ```
+
+### Development
+
+Development requires two installation steps:
+
+```sh
+$ npm install
+$ npm run install-dev
+```
+
+After that, run the full lint + tests:
+
+```sh
+$ npm run check
+```
+
+You can try out the live functional tests fixtures with our static server:
+
+```sh
+$ npm run server
+```
+
+and navigate to: http://127.0.0.1:3001/test/func/fixtures/
+
 
 [trav_img]: https://api.travis-ci.org/walmartlabs/little-loader.svg
 [trav_site]: https://travis-ci.org/walmartlabs/little-loader
