@@ -50,6 +50,11 @@ var APP_PORT = process.env.FUNC_PORT || process.env.TEST_FUNC_PORT || 3030;
 var APP_HOST = process.env.TEST_FUNC_HOST || "127.0.0.1";
 var APP_URL = "http://" + APP_HOST + ":" + APP_PORT + "/";
 
+// Magellan guarantees FUNC_PORT + a mocking port at +2.
+// https://github.com/walmartlabs/little-loader/issues/6#issuecomment-159065329
+var APP_PORT_OTHER = APP_PORT + 2;
+var APP_URL_OTHER = "http://" + APP_HOST + ":" + APP_PORT_OTHER + "/";
+
 // Start up (and later stop) a single instance of the server so that we can
 // interact with the web application via our tests.
 //
@@ -60,32 +65,51 @@ var APP_URL = "http://" + APP_HOST + ":" + APP_PORT + "/";
 // file and executed **once** for the entire test suite.
 var httpServer = require("http-server");
 var enableDestroy = require("server-destroy");
-var server;
-var realServer;
+
+// To test multiple origins, we spawn two servers.
+var server1;
+var realServer1;
+var server2;
+var realServer2;
 
 // ----------------------------------------------------------------------------
 // App server
 // ----------------------------------------------------------------------------
+// Primary server
 before(function (done) {
-  server = httpServer.createServer();
-  server.listen(APP_PORT, APP_HOST, done);
+  server1 = httpServer.createServer();
+  server1.listen(APP_PORT, APP_HOST, done);
 
   // `http-server` doesn't pass enough of the underlying server, so we capture it.
-  realServer = server.server;
+  realServer1 = server1.server;
 
   // Wrap the server with a "REALLY REALLY KILL IT!" `destroy` method.
-  enableDestroy(realServer);
+  enableDestroy(realServer1);
 });
 
 after(function (done) {
-  if (!realServer) { return done(); }
+  if (!realServer1) { return done(); }
 
   // Take that server!
-  realServer.destroy(done);
+  realServer1.destroy(done);
+});
+
+// Other server
+before(function (done) {
+  server2 = httpServer.createServer();
+  server2.listen(APP_PORT_OTHER, APP_HOST, done);
+  realServer2 = server2.server;
+  enableDestroy(realServer2);
+});
+
+after(function (done) {
+  if (!realServer2) { return done(); }
+  realServer2.destroy(done);
 });
 
 module.exports = {
   adapter: adapter,
   appUrl: APP_URL,
+  appUrlOther: APP_URL_OTHER,
   promiseDone: promiseDone
 };
