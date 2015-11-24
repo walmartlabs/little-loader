@@ -47,6 +47,7 @@ before(function (done) {
 // or have started a mock (or a real server) elsewhere, the FUNC_PORT option
 // passed in by Magellan can be safely ignored by your suite.
 var APP_PORT = process.env.FUNC_PORT || process.env.TEST_FUNC_PORT || 3030;
+APP_PORT = parseInt(APP_PORT, 10);
 var APP_HOST = process.env.TEST_FUNC_HOST || "127.0.0.1";
 var APP_URL = "http://" + APP_HOST + ":" + APP_PORT + "/";
 
