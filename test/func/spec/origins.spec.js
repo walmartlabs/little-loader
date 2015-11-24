@@ -26,8 +26,6 @@ describe("origins", function () {
         window._lload(appUrlOther + "test/func/fixtures/advanced/third.js", function () {
           content.innerHTML += "<div class='e2e-after-load-third'>After Load Third</div>";
         });
-
-        return appUrlOther + "test/func/fixtures/advanced/second.js";
       }, base.appUrlOther)
 
       // Check errors
