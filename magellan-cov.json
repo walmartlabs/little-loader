@@ -1,0 +1,9 @@
+{
+  "mocha_tests": [
+    "test/func/spec"
+  ],
+  "mocha_opts": "test/func/mocha-cov.opts",
+  "framework": "rowdy-mocha",
+  "sauce": false,
+  "browser": "phantomjs"
+}

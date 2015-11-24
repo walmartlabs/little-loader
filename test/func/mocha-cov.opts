@@ -1,0 +1,4 @@
+--require test/func/setup-cov.js
+--reporter spec
+--ui bdd
+--timeout 60000

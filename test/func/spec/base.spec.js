@@ -5,6 +5,8 @@
  * This file _must_ be run in any spec file and thus must be manually
  * `require()`-ed in.
  */
+var path = require("path");
+
 // --------------------------------------------------------------------------
 // Selenium (webdriverio/Rowdy) initialization
 // --------------------------------------------------------------------------
@@ -74,11 +76,58 @@ var server2;
 var realServer2;
 
 // ----------------------------------------------------------------------------
+// Code Coverage
+// ----------------------------------------------------------------------------
+var middleware = [];
+
+// Instrument library for middleware insertion.
+var _covered = function (filePath) {
+  var fs = require("fs");
+  var fileName = path.basename(filePath);
+  var code = fs.readFileSync(filePath);
+
+  var istanbul = require("istanbul");
+  var instrumenter = new istanbul.Instrumenter();
+  return instrumenter.instrumentSync(code.toString(), fileName);
+};
+
+if (global.USE_COVERAGE) {
+  // Custom Instrumentation middleware.
+  middleware.push(function (req, res) {
+    if (/lib\/little-loader\.js/.test(req.url)) {
+      var covered = _covered(path.join(__dirname, "../../../lib/little-loader.js"));
+
+      res.writeHead(200, { "Content-Type": "text/javascript" });
+      res.end(covered);
+      return;
+    }
+
+    res.emit("next");
+  });
+
+  afterEach(function (done) {
+    adapter.client
+      // Coverage.
+      .execute(function () {
+        return JSON.stringify(window.__coverage__);
+      }).then(function (ret) {
+        // TODO: Gather data
+        // TODO: Write out to appropriate location (with istanbul???)
+        console.log("TODO HERE COVERAGE", ret.value);
+      })
+
+      .finally(promiseDone(done));
+  })
+}
+
+// ----------------------------------------------------------------------------
 // App server
 // ----------------------------------------------------------------------------
 // Primary server
 before(function (done) {
-  server1 = httpServer.createServer();
+  server1 = httpServer.createServer({
+    before: middleware
+  });
   server1.listen(APP_PORT, APP_HOST, done);
 
   // `http-server` doesn't pass enough of the underlying server, so we capture it.
