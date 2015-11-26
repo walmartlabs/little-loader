@@ -5,4 +5,4 @@
 require("./setup.js");
 
 // Indicate coverage.
-global.USE_COVERAGE = true
+global.USE_COVERAGE = true;
