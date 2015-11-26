@@ -76,6 +76,7 @@ var realServer2;
 // ----------------------------------------------------------------------------
 var path = require("path");
 var fs = require("fs");
+var uuid = require("node-uuid");
 var istanbul = require("istanbul");
 var collector = new istanbul.Collector();
 
@@ -126,14 +127,23 @@ if (global.USE_COVERAGE) {
     // **Note**: We're tying to a known istanbul configuration file that in the
     //           general should come from a shell flag.
     var cfg = istanbul.config.loadFile(".istanbul.func.yml");
-    var reporter = new istanbul.Reporter(cfg);
 
-    // TODO: Add differentiation string for OS / Browser environment for
-    // multiple reports.
+    // TODO: rimraf `coverage/func`
+
+    // Patch reporter to output our GUID-driven incremental coverage files.
+    cfg.reporting.reportConfig = function () {
+      return {
+        json: {
+          file: "coverage-" + uuid.v4() + ".json"
+        }
+      };
+    };
+
+    var reporter = new istanbul.Reporter(cfg);
 
     // Manually add desired output reports.
     var reports = cfg.reporting.config.reports;
-    reporter.addAll(reports);
+    reporter.add("json");
 
     // Write out results.
     reporter.write(collector, false, done);
