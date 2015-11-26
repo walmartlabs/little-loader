@@ -68,9 +68,7 @@ var httpServer = require("http-server");
 var enableDestroy = require("server-destroy");
 
 // To test multiple origins, we spawn two servers.
-var server1;
 var realServer1;
-var server2;
 var realServer2;
 
 // ----------------------------------------------------------------------------
@@ -79,6 +77,7 @@ var realServer2;
 var path = require("path");
 var fs = require("fs");
 var istanbul = require("istanbul");
+var collector = new istanbul.Collector();
 
 var PROJECT_ROOT = path.resolve(__dirname, "../../..");
 var middleware = [];
@@ -113,14 +112,20 @@ if (global.USE_COVERAGE) {
         /*globals window:false */
         return JSON.stringify(window.__coverage__);
       }).then(function (ret) {
-        // TODO: Gather data
-        // TODO: Write out to appropriate location (with istanbul???)
-        /*eslint-disable no-console*/
-        console.log("TODO HERE COVERAGE", ret.value);
-        /*eslint-enable no-console*/
+        // Gather data into collector.
+        // Note: `JSON.parse` exception will get caught in `.finally()`
+        var covObj = JSON.parse(ret.value);
+        collector.add(covObj);
       })
 
       .finally(promiseDone(done));
+  });
+
+  after(function () {
+    /*eslint-disable no-console*/
+    console.log("TODO HERE COVERAGE",
+      JSON.stringify(collector.getFinalCoverage(), null, 2));
+    /*eslint-enable no-console*/
   });
 }
 
@@ -129,7 +134,7 @@ if (global.USE_COVERAGE) {
 // ----------------------------------------------------------------------------
 // Primary server
 before(function (done) {
-  server1 = httpServer.createServer({
+  var server1 = httpServer.createServer({
     before: middleware
   });
   server1.listen(APP_PORT, APP_HOST, done);
@@ -150,7 +155,7 @@ after(function (done) {
 
 // Other server
 before(function (done) {
-  server2 = httpServer.createServer();
+  var server2 = httpServer.createServer();
   server2.listen(APP_PORT_OTHER, APP_HOST, done);
   realServer2 = server2.server;
   enableDestroy(realServer2);
