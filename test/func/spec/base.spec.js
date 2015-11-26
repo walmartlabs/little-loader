@@ -121,11 +121,22 @@ if (global.USE_COVERAGE) {
       .finally(promiseDone(done));
   });
 
-  after(function () {
-    /*eslint-disable no-console*/
-    console.log("TODO HERE COVERAGE",
-      JSON.stringify(collector.getFinalCoverage(), null, 2));
-    /*eslint-enable no-console*/
+  after(function (done) {
+    // Load configuration.
+    // **Note**: We're tying to a known istanbul configuration file that in the
+    //           general should come from a shell flag.
+    var cfg = istanbul.config.loadFile(".istanbul.func.yml");
+    var reporter = new istanbul.Reporter(cfg);
+
+    // TODO: Add differentiation string for OS / Browser environment for
+    // multiple reports.
+
+    // Manually add desired output reports.
+    var reports = cfg.reporting.config.reports;
+    reporter.addAll(reports);
+
+    // Write out results.
+    reporter.write(collector, false, done);
   });
 }
 

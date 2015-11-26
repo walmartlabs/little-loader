@@ -1,0 +1,6 @@
+reporting:
+  dir: coverage/func
+  reports:
+    - lcov
+    - json
+    - text-summary
