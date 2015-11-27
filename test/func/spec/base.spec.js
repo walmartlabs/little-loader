@@ -128,8 +128,6 @@ if (global.USE_COVERAGE) {
     //           general should come from a shell flag.
     var cfg = istanbul.config.loadFile(".istanbul.func.yml");
 
-    // TODO: rimraf `coverage/func`
-
     // Patch reporter to output our GUID-driven incremental coverage files.
     cfg.reporting.reportConfig = function () {
       return {
@@ -139,13 +137,12 @@ if (global.USE_COVERAGE) {
       };
     };
 
-    var reporter = new istanbul.Reporter(cfg);
+    // Create a `coverage/func/data` directory for outputs.
+    var dir = path.join(cfg.reporting.config.dir, "data");
 
-    // Manually add desired output reports.
-    var reports = cfg.reporting.config.reports;
+    // Write out `data/coverage-GUID.json` object.
+    var reporter = new istanbul.Reporter(cfg, dir);
     reporter.add("json");
-
-    // Write out results.
     reporter.write(collector, false, done);
   });
 }

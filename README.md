@@ -4,12 +4,10 @@ Little Loader
 A lightweight, IE8+ JavaScript loader.
 
 [![Travis Status][trav_img]][trav_site]
+[![Coverage Status][cov_img]][cov_site]
 
 [![Sauce Test Status][sauce_img]][sauce_site]
 
-<!--
-[![Coverage Status][cov_img]][cov_site]
--->
 
 ### Goals
 
