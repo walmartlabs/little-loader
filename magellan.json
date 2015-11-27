@@ -4,7 +4,7 @@
   ],
   "mocha_opts": "test/func/mocha.opts",
   "framework": "rowdy-mocha",
-  "max_workers": 10,
+  "max_workers": 6,
   "sauce": false,
   "browser": "phantomjs"
 }
