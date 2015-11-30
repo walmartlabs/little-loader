@@ -68,17 +68,93 @@ var httpServer = require("http-server");
 var enableDestroy = require("server-destroy");
 
 // To test multiple origins, we spawn two servers.
-var server1;
 var realServer1;
-var server2;
 var realServer2;
+
+// ----------------------------------------------------------------------------
+// Code Coverage
+// ----------------------------------------------------------------------------
+var path = require("path");
+var fs = require("fs");
+var uuid = require("node-uuid");
+var istanbul = require("istanbul");
+var collector = new istanbul.Collector();
+
+var PROJECT_ROOT = path.resolve(__dirname, "../../..");
+var middleware = [];
+
+// Instrument library for middleware insertion.
+var _covered = function (filePath) {
+  var fileName = path.relative(PROJECT_ROOT, filePath);
+  var code = fs.readFileSync(filePath);
+  var instrumenter = new istanbul.Instrumenter();
+  return instrumenter.instrumentSync(code.toString(), fileName);
+};
+
+if (global.USE_COVERAGE) {
+  // Custom Instrumentation middleware.
+  middleware.push(function (req, res) {
+    if (/lib\/little-loader\.js/.test(req.url)) {
+      var covered = _covered(path.resolve(PROJECT_ROOT, "lib/little-loader.js"));
+
+      res.writeHead(200, { "Content-Type": "text/javascript" });
+      res.end(covered);
+      return;
+    }
+
+    res.emit("next");
+  });
+
+  afterEach(function (done) {
+    adapter.client
+      // Coverage.
+      .execute(function () {
+        // Client / browser code.
+        /*globals window:false */
+        return JSON.stringify(window.__coverage__);
+      }).then(function (ret) {
+        // Gather data into collector.
+        // Note: `JSON.parse` exception will get caught in `.finally()`
+        var covObj = JSON.parse(ret.value);
+        collector.add(covObj);
+      })
+
+      .finally(promiseDone(done));
+  });
+
+  after(function (done) {
+    // Load configuration.
+    // **Note**: We're tying to a known istanbul configuration file that in the
+    //           general should come from a shell flag.
+    var cfg = istanbul.config.loadFile(".istanbul.func.yml");
+
+    // Patch reporter to output our GUID-driven incremental coverage files.
+    cfg.reporting.reportConfig = function () {
+      return {
+        json: {
+          file: "coverage-" + uuid.v4() + ".json"
+        }
+      };
+    };
+
+    // Create a `coverage/func/data` directory for outputs.
+    var dir = path.join(cfg.reporting.config.dir, "data");
+
+    // Write out `data/coverage-GUID.json` object.
+    var reporter = new istanbul.Reporter(cfg, dir);
+    reporter.add("json");
+    reporter.write(collector, false, done);
+  });
+}
 
 // ----------------------------------------------------------------------------
 // App server
 // ----------------------------------------------------------------------------
 // Primary server
 before(function (done) {
-  server1 = httpServer.createServer();
+  var server1 = httpServer.createServer({
+    before: middleware
+  });
   server1.listen(APP_PORT, APP_HOST, done);
 
   // `http-server` doesn't pass enough of the underlying server, so we capture it.
@@ -97,7 +173,7 @@ after(function (done) {
 
 // Other server
 before(function (done) {
-  server2 = httpServer.createServer();
+  var server2 = httpServer.createServer();
   server2.listen(APP_PORT_OTHER, APP_HOST, done);
   realServer2 = server2.server;
   enableDestroy(realServer2);

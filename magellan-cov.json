@@ -2,7 +2,7 @@
   "mocha_tests": [
     "test/func/spec"
   ],
-  "mocha_opts": "test/func/mocha.opts",
+  "mocha_opts": "test/func/mocha-cov.opts",
   "framework": "rowdy-mocha",
   "max_workers": 6,
   "sauce": false,
