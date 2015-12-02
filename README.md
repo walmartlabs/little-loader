@@ -15,6 +15,14 @@ A lightweight, IE8+ JavaScript loader that is **actually tested**...
 * Really, really **small** (clocking in at `~666` minified bytes)
 * ... and **that's it**!
 
+We currently test:
+
+* Karma - _Travis_: PhantomJS, Firefox
+* Selenium - _Travis_: PhantomJS, Firefox
+* Selenium - _Sauce Labs_:
+    * Windows: Firefox, Chrome, IE8-11
+    * Mac: Safari
+
 ### Usage
 
 Alone, little loader attaches to `window._lload` for loading your Javascript:
@@ -96,6 +104,20 @@ $ npm run server
 ```
 
 and navigate to: http://127.0.0.1:3001/test/func/fixtures/
+
+### Tests
+
+We run both Karma (client-side) and Selenium (functional) tests.
+
+The **Karma** tests are faster and more flexible, but slightly "off" from
+real-world use because of their execution environment. We use Karma tests to
+kick the tires on our AMD and CommonJS abstractions and little, one-off use
+case scenarios.
+
+The **Selenium** tests are slower and klunky, but they are the "real deal"
+executing `little-loader` in exactlty the same manner as would be used on a
+real web page. We use Selenium to test a core set of fundamental use cases
+across all browsers in our matrix.
 
 ### Releases
 

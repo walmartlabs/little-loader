@@ -42,9 +42,9 @@ script:
   # https://github.com/walmartlabs/little-loader/issues/5
   - npm run test-func-sauce-safari
 
-  # Aggregate all coverage JSON objects to one report.
+  # Aggregate all functional coverage JSON objects to one report.
   - npm run cov-report-func
 
   # Manually send coverage reports to coveralls.
-  - ls  coverage/*/lcov.info | cat
-  - cat coverage/*/lcov.info | ./node_modules/.bin/coveralls || echo "Coveralls upload failed"
+  - ls  coverage/*/lcov.info coverage/client/*/*/lcov.info | cat
+  - cat coverage/*/lcov.info coverage/client/*/*/lcov.info | ./node_modules/.bin/coveralls || echo "Coveralls upload failed"
