@@ -12,12 +12,12 @@ A lightweight, IE8+ JavaScript loader that is **actually tested**...
 
 * **Tested** all the way down to IE8
 * Reliably **calls back** after script loads
-* Really, really **small** (clocking in at `~525` minified bytes)
+* Really, really **small** (clocking in at `~666` minified bytes)
 * ... and **that's it**!
 
 ### Usage
 
-Little loader attaches to `window._lload` for use in your JavaScript.
+Alone, little loader attaches to `window._lload` for loading your Javascript:
 
 ```html
 <script>
@@ -25,6 +25,26 @@ Little loader attaches to `window._lload` for use in your JavaScript.
     // foo.js is loaded!
   }/*, [optional context variable here] */);
 </script>
+```
+
+If you use an AMD bundling tool (like RequireJS):
+
+```js
+define(["little-loader"], function (load) {
+  load("http://example.com/foo.js", function () {
+    // foo.js is loaded!
+  }/*, [optional context variable here] */);
+});
+```
+
+If you use a CommonJS bundling tool (like Webpack):
+
+```js
+var load = require("little-loader");
+
+load("http://example.com/foo.js", function () {
+  // foo.js is loaded!
+}/*, [optional context variable here] */);
 ```
 
 ### Installation
@@ -48,57 +68,11 @@ To include `little-loader` as part of your own build, first install from `npm`:
 $ npm install --save little-loader
 ```
 
-The library presently does _not_ have a UMD wrapper, assuming instead you're
-going to inline the library. If you are using a bundler tool, here are some
-common integrations for first-class support:
+The library has a UMD wrapper and should work like any other AMD or CommonJS
+module with your favorite bundling tool (Webpack, RequireJS, etc.).
 
-##### RequireJS
-
-Edit your RequireJS configuration file to include:
-
-```js
-shim: {
-  "little-loader": {
-    exports: "_lload"
-  }
-}
-```
-
-and then in your application:
-
-```js
-define(["little-loader"], function (load) {
-  load("http://example.com/foo.js", function () {
-    // foo.js is loaded!
-  }/*, [optional context variable here] */);
-});
-```
-
-##### Webpack
-
-For Webpack, you'll need to install the `exports-loader` and then edit your
-Webpack configuration file to include:
-
-```js
-module: {
-  loaders: [
-    {
-      test: require.resolve("little-loader"),
-      loader: "exports?window._lload"
-    }
-  ]
-}
-```
-
-and then in your application:
-
-```js
-var load = require("little-loader");
-
-load("http://example.com/foo.js", function () {
-  // foo.js is loaded!
-}/*, [optional context variable here] */);
-```
+If you do not use a CommonJS or AMD loader tool, then little loader will be
+exposed as the `window._lload` variable.
 
 ### Development
 
