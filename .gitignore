@@ -10,9 +10,5 @@ phantomjsdriver\.log
 
 # Build
 dist
-*/dist
-build
-*/build
 coverage
-Procfile
 temp
