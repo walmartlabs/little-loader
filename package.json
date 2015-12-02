@@ -2,7 +2,7 @@
   "name": "little-loader",
   "version": "0.0.1",
   "description": "A lightweight, IE8+ JavaScript loader.",
-  "main": "index.js",
+  "main": "lib/little-loader.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/walmartlabs/little-loader.git"
@@ -40,6 +40,7 @@
     "selenium-standalone": "^4.7.1",
     "server-destroy": "^1.0.1",
     "testarmada-magellan": "^3.0.3",
+    "uglify-js": "^2.6.1",
     "webdriverio": "^3.2.6"
   },
   "scripts": {
@@ -61,6 +62,10 @@
     "check": "npm run lint && npm run test",
     "check-ci": "npm run lint && npm run test-ci",
     "server": "http-server -p 3001 .",
-    "install-dev": "selenium-standalone install"
+    "install-dev": "selenium-standalone install",
+    "build": "rimraf dist && mkdir dist && uglifyjs lib/little-loader.js --stats --compress --mangle --output=dist/little-loader.min.js",
+    "preversion": "npm run check",
+    "version": "npm run build",
+    "postversion": "git push && git push --tags && npm publish"
   }
 }
