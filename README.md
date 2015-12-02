@@ -23,7 +23,7 @@ Alone, little loader attaches to `window._lload` for loading your Javascript:
 <script>
   window._lload("http://example.com/foo.js", function () {
     // foo.js is loaded!
-  }/*, [optional context variable here] */);
+  }/*, [optional context (`this`) variable here] */);
 </script>
 ```
 
@@ -33,7 +33,7 @@ If you use an AMD bundling tool (like RequireJS):
 define(["little-loader"], function (load) {
   load("http://example.com/foo.js", function () {
     // foo.js is loaded!
-  }/*, [optional context variable here] */);
+  }/*, [optional context (`this`) variable here] */);
 });
 ```
 
@@ -44,7 +44,7 @@ var load = require("little-loader");
 
 load("http://example.com/foo.js", function () {
   // foo.js is loaded!
-}/*, [optional context variable here] */);
+}/*, [optional context (`this`) variable here] */);
 ```
 
 ### Installation
