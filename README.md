@@ -1,20 +1,18 @@
 Little Loader
 =============
 
-A lightweight, IE8+ JavaScript loader.
+A lightweight, IE8+ JavaScript loader that is **actually tested**...
 
 [![Travis Status][trav_img]][trav_site]
 [![Coverage Status][cov_img]][cov_site]
 
 [![Sauce Test Status][sauce_img]][sauce_site]
 
+... with a very narrow set of objectives:
 
-### Goals
-
-* Crafted to be inlined tightly in a page.
-* Tested all the way down to IE8, but not further to keep the script as small
-  as possible.
-* Reliably calls back after script loads.
+* **Tested** all the way down to IE8
+* Reliably **calls back** after script loads
+* Really, really **small** (clocking in at `~525` minified bytes)
 * ... and **that's it**!
 
 ### Usage
@@ -27,6 +25,79 @@ Little loader attaches to `window._lload` for use in your JavaScript.
     // foo.js is loaded!
   }/*, [optional context variable here] */);
 </script>
+```
+
+### Installation
+
+#### CDN
+
+For the ready-to-use version from CDN, use
+
+```html
+<!-- Minified, production version -->
+<script src="https://npmcdn.com/little-loader@VERSION/dist/little-loader.min.js"></script>
+<!-- Development version -->
+<script src="https://npmcdn.com/little-loader@VERSION/lib/little-loader.js"></script>
+```
+
+#### NPM
+
+To include `little-loader` as part of your own build, first install from `npm`:
+
+```
+$ npm install --save little-loader
+```
+
+The library presently does _not_ have a UMD wrapper, assuming instead you're
+going to inline the library. If you are using a bundler tool, here are some
+common integrations for first-class support:
+
+##### RequireJS
+
+Edit your RequireJS configuration file to include:
+
+```js
+shim: {
+  "little-loader": {
+    exports: "_lload"
+  }
+}
+```
+
+and then in your application:
+
+```js
+define(["little-loader"], function (load) {
+  load("http://example.com/foo.js", function () {
+    // foo.js is loaded!
+  }/*, [optional context variable here] */);
+});
+```
+
+##### Webpack
+
+For Webpack, you'll need to install the `exports-loader` and then edit your
+Webpack configuration file to include:
+
+```js
+module: {
+  loaders: [
+    {
+      test: require.resolve("little-loader"),
+      loader: "exports?window._lload"
+    }
+  ]
+}
+```
+
+and then in your application:
+
+```js
+var load = require("little-loader");
+
+load("http://example.com/foo.js", function () {
+  // foo.js is loaded!
+}/*, [optional context variable here] */);
 ```
 
 ### Development
@@ -52,6 +123,31 @@ $ npm run server
 
 and navigate to: http://127.0.0.1:3001/test/func/fixtures/
 
+### Releases
+
+**IMPORTANT - NPM**: To correctly run `preversion` your first step is to make
+sure that you have a very modern `npm` binary:
+
+```sh
+$ npm install -g npm
+```
+
+First, you can optionally edit and commit the project history.
+
+```sh
+$ vim HISTORY.md
+$ git add HISTORY.md
+$ git commit -m "Update history for VERSION"
+```
+
+Now we're ready to publish. Choose a semantic update for the new version.
+If you're unsure, read about semantic versioning at http://semver.org/
+
+```sh
+$ npm version VERSION|major|minor|patch -m "Version %s - INSERT_REASONS"
+```
+
+Now `postversion` will push to git and publish to NPM.
 
 [trav_img]: https://api.travis-ci.org/walmartlabs/little-loader.svg
 [trav_site]: https://travis-ci.org/walmartlabs/little-loader
