@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fixture</title>
+  </head>
+  <body>
+    <div class="e2e-content"></div>
+    <div class="e2e-error"></div>
+    <script src="error-handler.js"></script>
+    <script src="../../../lib/little-loader.js"></script>
+    <script>
+      // Load a non-existent page.
+      window._lload("DOESNT_EXIST.js", function (err) {
+        var content = document.querySelector(".e2e-content");
+        content.innerHTML +=
+          "<div class='e2e-after-load'>" +
+          (err ? err.message || err.toString() : "NO_ERROR") +
+          "</div>";
+      });
+    </script>
+  </body>
+</html>

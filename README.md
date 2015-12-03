@@ -12,7 +12,8 @@ A lightweight, IE8+ JavaScript loader that is **actually tested**...
 
 * **Tested** all the way down to IE8
 * Reliably **calls back** after script loads
-* Really, really **small** (clocking in at `~666` minified bytes)
+* Captures script load **errors** down to IE8
+* Really, really **small** (clocking in at `~865` minified bytes)
 * ... and **that's it**!
 
 We currently test:
@@ -29,8 +30,9 @@ Alone, little loader attaches to `window._lload` for loading your Javascript:
 
 ```html
 <script>
-  window._lload("http://example.com/foo.js", function () {
-    // foo.js is loaded!
+  window._lload("http://example.com/foo.js", function (err) {
+    // `err` is script load error.
+    // otherwise, foo.js is loaded!
   }/*, [optional context (`this`) variable here] */);
 </script>
 ```
@@ -39,9 +41,9 @@ If you use an AMD bundling tool (like RequireJS):
 
 ```js
 define(["little-loader"], function (load) {
-  load("http://example.com/foo.js", function () {
-    // foo.js is loaded!
-  }/*, [optional context (`this`) variable here] */);
+  load("http://example.com/foo.js", function (err) {
+    // ... your code ...
+  });
 });
 ```
 
@@ -50,9 +52,9 @@ If you use a CommonJS bundling tool (like Webpack):
 ```js
 var load = require("little-loader");
 
-load("http://example.com/foo.js", function () {
-  // foo.js is loaded!
-}/*, [optional context (`this`) variable here] */);
+load("http://example.com/foo.js", function (err) {
+  // ... your code ...
+});
 ```
 
 ### Installation
