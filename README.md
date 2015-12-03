@@ -115,7 +115,7 @@ kick the tires on our AMD and CommonJS abstractions and little, one-off use
 case scenarios.
 
 The **Selenium** tests are slower and klunky, but they are the "real deal"
-executing `little-loader` in exactlty the same manner as would be used on a
+executing `little-loader` in exactly the same manner as would be used on a
 real web page. We use Selenium to test a core set of fundamental use cases
 across all browsers in our matrix.
 
