@@ -1,0 +1,13 @@
+---
+extends:
+  - "defaults/configurations/walmart/es5-test"
+  - "defaults/configurations/walmart/es5-browser"
+
+globals:
+  expect: false
+  define: false
+  requirejs: false
+
+rules:
+  no-unused-expressions: 0
+  max-nested-callbacks: [2, 10]
