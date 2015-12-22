@@ -16,9 +16,19 @@ var rowdy = require("rowdy");
 var config = require("rowdy/config");
 var promiseDone = rowdy.helpers.webdriverio.promiseDone;
 
+// Only start selenium on single-run local.
+var startSelenium = process.env.TEST_PARALLEL !== "true" && process.env.CI !== "true";
+
 // Patch and re-configure.
 config.options.driverLib = "webdriverio";
+config.options.server.start = startSelenium;
 rowdy(config);
+
+// Patch rowdy to force not started.
+// https://github.com/FormidableLabs/rowdy/issues/40
+if ((rowdy.setting.server || {}).start) {
+  rowdy.setting.server.start = startSelenium;
+}
 
 // Mocha adapter.
 var Adapter = rowdy.adapters.mocha;
@@ -41,19 +51,14 @@ before(function (done) {
 // --------------------------------------------------------------------------
 // Dev. Server
 // --------------------------------------------------------------------------
-// Magellan passes in a FUNC_PORT option for projects based on rowdy-mocha.
-// This allows for individual distinct mocking servers to be set up in parallel,
-// each with its own state. If you don't need to have individual mocking servers
-// or have started a mock (or a real server) elsewhere, the FUNC_PORT option
-// passed in by Magellan can be safely ignored by your suite.
-var APP_PORT = process.env.FUNC_PORT || process.env.TEST_FUNC_PORT || 3030;
+var APP_PORT = process.env.TEST_FUNC_PORT || 3030;
 APP_PORT = parseInt(APP_PORT, 10);
 var APP_HOST = process.env.TEST_FUNC_HOST || "127.0.0.1";
 var APP_URL = "http://" + APP_HOST + ":" + APP_PORT + "/";
 
-// Magellan guarantees FUNC_PORT + a mocking port at +2.
-// https://github.com/walmartlabs/little-loader/issues/6#issuecomment-159065329
-var APP_PORT_OTHER = APP_PORT + 2;
+// Go for "other" port of +2 if not specified
+var APP_PORT_OTHER = process.env.TEST_FUNC_PORT_OTHER || APP_PORT + 2;
+APP_PORT_OTHER = parseInt(APP_PORT_OTHER, 10);
 var APP_URL_OTHER = "http://" + APP_HOST + ":" + APP_PORT_OTHER + "/";
 
 // Start up (and later stop) a single instance of the server so that we can
