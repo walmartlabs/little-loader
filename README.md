@@ -5,6 +5,8 @@ A lightweight, IE8+ JavaScript loader that is **actually tested**...
 
 [![Travis Status][trav_img]][trav_site]
 [![Coverage Status][cov_img]][cov_site]
+![size](http://badges.herokuapp.com/size/npm/little-loader/dist/little-loader.min.js)
+![size (gz)](http://badges.herokuapp.com/size/npm/little-loader/dist/little-loader.min.js?gzip=true&label=size%20(gz))
 
 [![Sauce Test Status][sauce_img]][sauce_site]
 
