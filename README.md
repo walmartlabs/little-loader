@@ -121,6 +121,57 @@ executing `little-loader` in exactly the same manner as would be used on a
 real web page. We use Selenium to test a core set of fundamental use cases
 across all browsers in our matrix.
 
+#### Parallel Local Tests
+
+Our CI is setup with a specific optimized parallel workflow. To run parallel
+functional tests in development, here are some helper tasks...
+
+**Local Browsers**
+
+```sh
+$ TEST_PARALLEL=true \
+  builder envs test-func-local \
+  --setup=setup-local \
+  --buffer \
+  '[ { "TEST_FUNC_PORT": 3030, "ROWDY_SETTINGS":"local.phantomjs" },
+     { "TEST_FUNC_PORT": 3040, "ROWDY_SETTINGS":"local.firefox" },
+     { "TEST_FUNC_PORT": 3050, "ROWDY_SETTINGS":"local.chrome" }
+   ]'
+```
+
+The `TEST_PARALLEL` flag indicates to not do in-test setup which would conflict
+with other test processes. We also rely on setting `TEST_FUNC_PORT` specifically
+to non-conflicting ports with at least 3 ports total from the starting number
+for the two separate static servers we run during tests.
+
+**Sauce Labs**
+
+To run Sauce Labs tests in parallel from a local machine, you'll need the `sc`
+binary, which can be force installed with:
+
+```sh
+$ SAUCE_CONNECT_DOWNLOAD_ON_INSTALL=true npm install sauce-connect-launcher
+```
+
+After this, the module is available at:
+`node_modules/sauce-connect-launcher/sc/*/bin/sc`
+
+From there, you can invoke our helper local commands:
+
+```sh
+$ TEST_PARALLEL=true \
+  SAUCE_USERNAME=<INSERT_USERNAME> \
+  SAUCE_ACCESS_KEY=<INSERT_ACCESS_KEY> \
+  builder envs test-func-sauce \
+  --setup=setup-sauce \
+  --buffer \
+  '[ { "TEST_FUNC_PORT": 3030, "ROWDY_SETTINGS":"sauceLabs.IE_8_Windows_2008_Desktop" },
+     { "TEST_FUNC_PORT": 3040, "ROWDY_SETTINGS":"sauceLabs.IE_9_Windows_2008_Desktop" },
+     { "TEST_FUNC_PORT": 3050, "ROWDY_SETTINGS":"sauceLabs.IE_10_Windows_2012_Desktop" }
+   ]'
+```
+
+
 ### Releases
 
 **IMPORTANT - NPM**: To correctly run `preversion` your first step is to make
@@ -150,7 +201,8 @@ Now `postversion` will push to git and publish to NPM.
 [trav_img]: https://api.travis-ci.org/walmartlabs/little-loader.svg
 [trav_site]: https://travis-ci.org/walmartlabs/little-loader
 [sauce]: https://saucelabs.com
-[sauce_img]: https://saucelabs.com/browser-matrix/wml-little-loader.svg
+[sauce_img]: http://badges.herokuapp.com/sauce/wml-little-loader
+<!--[sauce_img]: https://saucelabs.com/browser-matrix/wml-little-loader.svg-->
 [sauce_site]: https://saucelabs.com/u/wml-little-loader
 [cov]: https://coveralls.io
 [cov_img]: https://img.shields.io/coveralls/walmartlabs/little-loader.svg
