@@ -1,6 +1,11 @@
 History
 =======
 
+## 0.1.1
+
+* Optimize for minified, gzipped size. ( [@pygy][] )
+  [#29](https://github.com/walmartlabs/little-loader/issues/29)
+
 ## 0.1.0
 
 * Add AMD, CommonJS Karma tests.
@@ -21,4 +26,5 @@ History
 
 * Initial implementation and functional tests.
 
+[@pygy]: https://github.com/pygy
 [@ryan-roemer]: https://github.com/ryan-roemer
