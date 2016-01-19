@@ -1,6 +1,6 @@
 {
   "name": "little-loader",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A lightweight, IE8+ JavaScript loader.",
   "main": "lib/little-loader.js",
   "repository": {
