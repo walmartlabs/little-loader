@@ -3,10 +3,10 @@
 var base = require("./base.spec");
 
 describe("error", function () {
-  it("handles multiple jqueries", function (done) {
+  it("handles multiple jqueries", function () {
     var url = base.appUrl + "test/func/fixtures/jquery.html";
 
-    base.adapter.client
+    return base.adapter.client
       .url(url)
 
       // Check errors
@@ -83,9 +83,6 @@ describe("error", function () {
       })
       .getText(".e2e-jquery-1-11-3-2-result").then(function (text) {
         expect(text).to.equal("PASS");
-      })
-
-
-      .finally(base.promiseDone(done));
+      });
   });
 });

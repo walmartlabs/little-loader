@@ -3,10 +3,10 @@
 var base = require("./base.spec");
 
 describe("error", function () {
-  it("capture script 404 error", function (done) {
+  it("capture script 404 error", function () {
     var url = base.appUrl + "test/func/fixtures/error.html";
 
-    base.adapter.client
+    return base.adapter.client
       .url(url)
 
       // Check errors
@@ -17,8 +17,6 @@ describe("error", function () {
       // Verify error callback
       .getText(".e2e-after-load").then(function (text) {
         expect(text).to.equal("DOESNT_EXIST.js");
-      })
-
-      .finally(base.promiseDone(done));
+      });
   });
 });

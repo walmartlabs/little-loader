@@ -3,10 +3,10 @@
 var base = require("./base.spec");
 
 describe("advanced", function () {
-  it("loads advanced scenario", function (done) {
+  it("loads advanced scenario", function () {
     var url = base.appUrl + "test/func/fixtures/advanced.html";
 
-    base.adapter.client
+    return base.adapter.client
       .url(url)
 
       // Check errors
@@ -38,8 +38,6 @@ describe("advanced", function () {
       })
       .getText(".e2e-after-load-fourth").then(function (text) {
         expect(text).to.equal("After Load Fourth");
-      })
-
-      .finally(base.promiseDone(done));
+      });
   });
 });

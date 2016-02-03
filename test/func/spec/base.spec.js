@@ -14,7 +14,6 @@
 // Enable Rowdy with webdriverio.
 var rowdy = require("rowdy");
 var config = require("rowdy/config");
-var promiseDone = rowdy.helpers.webdriverio.promiseDone;
 
 // Only start selenium on single-run local.
 var startSelenium = process.env.TEST_PARALLEL !== "true" && process.env.CI !== "true";
@@ -39,13 +38,12 @@ adapter.beforeEach();
 adapter.afterEach();
 adapter.after();
 
-before(function (done) {
+before(function () {
   // The `adapter.before();` call has the side effect of instantiating a
   // Selenium / webdriver client that we can extract here.
   // Set a global Selenium timeout that is _before_ our test timeout.
-  adapter.client
-    .timeouts("implicit", 200)
-    .finally(promiseDone(done));
+  return adapter.client
+    .timeouts("implicit", 200);
 });
 
 // --------------------------------------------------------------------------
@@ -110,8 +108,8 @@ if (global.USE_COVERAGE) {
     res.emit("next");
   });
 
-  afterEach(function (done) {
-    adapter.client
+  afterEach(function () {
+    return adapter.client
       // Coverage.
       .execute(function () {
         // Client / browser code.
@@ -122,9 +120,7 @@ if (global.USE_COVERAGE) {
         // Note: `JSON.parse` exception will get caught in `.finally()`
         var covObj = JSON.parse(ret.value);
         collector.add(covObj);
-      })
-
-      .finally(promiseDone(done));
+      });
   });
 
   after(function (done) {
@@ -192,6 +188,5 @@ after(function (done) {
 module.exports = {
   adapter: adapter,
   appUrl: APP_URL,
-  appUrlOther: APP_URL_OTHER,
-  promiseDone: promiseDone
+  appUrlOther: APP_URL_OTHER
 };

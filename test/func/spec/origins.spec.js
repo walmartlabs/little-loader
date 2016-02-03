@@ -7,10 +7,10 @@
 var base = require("./base.spec");
 
 describe("origins", function () {
-  it("loads origins scenario", function (done) {
+  it("loads origins scenario", function () {
     var url = base.appUrl + "test/func/fixtures/origins.html";
 
-    base.adapter.client
+    return base.adapter.client
       .url(url)
 
       // Inject dynamic JS (easiest way to get `appUrlOther` information).
@@ -59,8 +59,6 @@ describe("origins", function () {
       })
       .getText(".e2e-after-load-fourth").then(function (text) {
         expect(text).to.equal("After Load Fourth");
-      })
-
-      .finally(base.promiseDone(done));
+      });
   });
 });
