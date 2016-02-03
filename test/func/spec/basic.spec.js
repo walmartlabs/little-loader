@@ -3,10 +3,10 @@
 var base = require("./base.spec");
 
 describe("basic", function () {
-  it("loads basic script", function (done) {
+  it("loads basic script", function () {
     var url = base.appUrl + "test/func/fixtures/basic.html";
 
-    base.adapter.client
+    return base.adapter.client
       .url(url)
 
       // Check errors
@@ -20,8 +20,6 @@ describe("basic", function () {
       })
       .getText(".e2e-after-load").then(function (text) {
         expect(text).to.equal("After Load");
-      })
-
-      .finally(base.promiseDone(done));
+      });
   });
 });
