@@ -39,17 +39,20 @@ adapter.afterEach();
 adapter.after();
 
 before(function () {
+  var IMPLICIT_TIMEOUT = 200;
+
   // The `adapter.before();` call has the side effect of instantiating a
   // Selenium / webdriver client that we can extract here.
   // Set a global Selenium timeout that is _before_ our test timeout.
   return adapter.client
-    .timeouts("implicit", 200);
+    .timeouts("implicit", IMPLICIT_TIMEOUT);
 });
 
 // --------------------------------------------------------------------------
 // Dev. Server
 // --------------------------------------------------------------------------
-var APP_PORT = process.env.TEST_FUNC_PORT || 3030;
+var APP_PORT_DEFAULT = 3030;
+var APP_PORT = process.env.TEST_FUNC_PORT || APP_PORT_DEFAULT;
 APP_PORT = parseInt(APP_PORT, 10);
 var APP_HOST = process.env.TEST_FUNC_HOST || "127.0.0.1";
 var APP_URL = "http://" + APP_HOST + ":" + APP_PORT + "/";
@@ -97,10 +100,12 @@ var _covered = function (filePath) {
 if (global.USE_COVERAGE) {
   // Custom Instrumentation middleware.
   middleware.push(function (req, res) {
+    var HTTP_OK = 200;
+
     if (/lib\/little-loader\.js/.test(req.url)) {
       var covered = _covered(path.resolve(PROJECT_ROOT, "lib/little-loader.js"));
 
-      res.writeHead(200, { "Content-Type": "text/javascript" });
+      res.writeHead(HTTP_OK, { "Content-Type": "text/javascript" });
       res.end(covered);
       return;
     }
