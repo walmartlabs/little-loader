@@ -67,9 +67,9 @@ For the ready-to-use version from CDN, use
 
 ```html
 <!-- Minified, production version -->
-<script src="https://npmcdn.com/little-loader@VERSION/dist/little-loader.min.js"></script>
+<script src="https://unpkg.com/little-loader@VERSION/dist/little-loader.min.js"></script>
 <!-- Development version -->
-<script src="https://npmcdn.com/little-loader@VERSION/lib/little-loader.js"></script>
+<script src="https://unpkg.com/little-loader@VERSION/lib/little-loader.js"></script>
 ```
 
 #### NPM
