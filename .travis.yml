@@ -17,7 +17,6 @@ env:
     # https://docs.travis-ci.com/user/sauce-connect/
     - SAUCE_CONNECT_TUNNEL_ID=$TRAVIS_JOB_NUMBER
     - SAUCE_USERNAME=wml-little-loader
-    - secure: t9yalh16COfTgMWI58MKD5cq3/4t1jiiGmRz7xmi5T4QkRkxYzATF+C60z2nXbnsF4RLflcRBgJZ0PbR/L2JxQ3yALasougJjb0EbVr8XoJQiyhnUEQpRxtoxn9oV9Fnp3/DDQduPTZ1zPzd20N7mOpYoqNMaVnMFj353fVzI3vph29/uakvR/nNCq7BNjcOll5+JRifpXFgsACWUalU+IR/R1xmrciw7KoLlHfe8Zy349X0mv3Ez2uugqsQ5CZnRI9vffNvIWXhuVU0sCoANydYS+d5vBjO5txrxZSv14enXFKBLaXkxViYmzQMHI2FDjx71KsKeCoGoH9ooSOfwPSXSrUFTRDN0nhow3Z3uqo3EjP/uJ0I+Hoe7gJWvUDw90Q1IX2WuoSxWU+fdgEewZyvQboaC6CSaF2rdvCfl058uIbcGhhkkGAmpwvJKSsytWOJjeTA3hpYPSHGlvVLvXER1bfAIC/iBf5VGBExotNrPSpG+PsqzhpUsFSmkjY5gpKElhcNW9Ag3r5IJJJL1xVu8aXO55T5VrmTn/jINEAo91nJZhHrjX7x0kPWzlvU5/JAAOjpcrOVfpvqjkpvmxev/JtPZl2cx8lHadPXYJw98hIagpQdkfojNI5C4ACSrTVNe/IoEujgykbh9egpe8HGsG+U+g6qogmFPQFUP/8=
 
 before_install:
   # GUI for real browsers.
@@ -36,6 +35,8 @@ before_script:
 
 addons:
   sauce_connect: true
+  jwt:
+    - secure: t9yalh16COfTgMWI58MKD5cq3/4t1jiiGmRz7xmi5T4QkRkxYzATF+C60z2nXbnsF4RLflcRBgJZ0PbR/L2JxQ3yALasougJjb0EbVr8XoJQiyhnUEQpRxtoxn9oV9Fnp3/DDQduPTZ1zPzd20N7mOpYoqNMaVnMFj353fVzI3vph29/uakvR/nNCq7BNjcOll5+JRifpXFgsACWUalU+IR/R1xmrciw7KoLlHfe8Zy349X0mv3Ez2uugqsQ5CZnRI9vffNvIWXhuVU0sCoANydYS+d5vBjO5txrxZSv14enXFKBLaXkxViYmzQMHI2FDjx71KsKeCoGoH9ooSOfwPSXSrUFTRDN0nhow3Z3uqo3EjP/uJ0I+Hoe7gJWvUDw90Q1IX2WuoSxWU+fdgEewZyvQboaC6CSaF2rdvCfl058uIbcGhhkkGAmpwvJKSsytWOJjeTA3hpYPSHGlvVLvXER1bfAIC/iBf5VGBExotNrPSpG+PsqzhpUsFSmkjY5gpKElhcNW9Ag3r5IJJJL1xVu8aXO55T5VrmTn/jINEAo91nJZhHrjX7x0kPWzlvU5/JAAOjpcrOVfpvqjkpvmxev/JtPZl2cx8lHadPXYJw98hIagpQdkfojNI5C4ACSrTVNe/IoEujgykbh9egpe8HGsG+U+g6qogmFPQFUP/8=
 
 script:
   # Run all base checks (with `local.phantomjs` browser for functional tests,
