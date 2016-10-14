@@ -71,3 +71,5 @@ script:
   # Manually send coverage reports to coveralls.
   - ls  coverage/*/lcov.info coverage/client/*/*/lcov.info | cat
   - cat coverage/*/lcov.info coverage/client/*/*/lcov.info | ./node_modules/.bin/coveralls || echo "Coveralls upload failed"
+  
+  
