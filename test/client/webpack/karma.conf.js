@@ -7,7 +7,7 @@ var ROOT = path.join(__dirname, "../../..");
 
 module.exports = function (config) {
   config.set({
-    frameworks: ["mocha", "phantomjs-shim"],
+    frameworks: ["mocha", "phantomjs-shim", "sinon"],
     reporters: ["spec"],
     browsers: ["PhantomJS"],
     basePath: ROOT,
