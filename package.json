@@ -59,6 +59,7 @@
     "selenium-standalone": "^4.9.1",
     "server-destroy": "^1.0.1",
     "sinon": "^1.17.6",
+    "sinon-chai": "^2.8.0",
     "uglify-js": "^2.6.1",
     "webdriverio": "^4.0.3",
     "webpack": "^1.12.9"

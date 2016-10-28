@@ -6,10 +6,14 @@
 
 /*globals window:false*/
 var chai = require("chai");
+var sinonChai = require("sinon-chai");
 
 // --------------------------------------------------------------------------
 // Chai / Mocha configuration.
 // --------------------------------------------------------------------------
+// Integration
+chai.use(sinonChai);
+
 // Exports
 window.expect = chai.expect;
 

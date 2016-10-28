@@ -13,6 +13,7 @@ module.exports = function (config) {
     basePath: ROOT,
     files: [
       { pattern: "node_modules/chai/chai.js", included: false },
+      { pattern: "node_modules/sinon-chai/lib/sinon-chai.js", included: false },
       { pattern: "lib/**/*.js", included: false },
       { pattern: "test/client/fixtures/**/*.js", included: false },
       { pattern: "test/client/requirejs/**/*.spec.js", included: false },

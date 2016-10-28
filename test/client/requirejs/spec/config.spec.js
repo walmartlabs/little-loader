@@ -3,10 +3,6 @@
 define(["lib/little-loader"], function (load) {
   describe("requirejs:config", function () {
 
-    it("load is a function", function () {
-      expect(load).to.be.a("function");
-    });
-
     it("loads basic", function (done) {
       var config = {
         callback: function (err) {
@@ -35,19 +31,21 @@ define(["lib/little-loader"], function (load) {
     });
 
     it("calls setup", function (done) {
-      var callback = sinon.spy();
-      var context = { };
+      var setup = sinon.spy();
+      var context = {};
 
       var config = {
         callback: function (err) {
           expect(err).to.not.be.ok;
-          expect(callback.calledOnce);
-          expect(callback.calledOn(context));
+          expect(setup)
+            .to.have.callCount(1).and
+            .to.be.calledOn(context);
+
           done();
         },
 
         context: context,
-        setup: callback
+        setup: setup
       };
 
       load("/base/test/client/fixtures/basic/basic.js", config);

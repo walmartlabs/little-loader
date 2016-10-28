@@ -10,16 +10,20 @@
     baseUrl: "/base",
 
     paths: {
-      "chai": "node_modules/chai/chai"
+      "chai": "node_modules/chai/chai",
+      "sinon-chai": "node_modules/sinon-chai/lib/sinon-chai"
     }
   });
 
-  require(["chai"], function (chai) {
+  require(["chai", "sinon-chai"], function (chai, sinonChai) {
     /*globals window:false*/
 
     // ------------------------------------------------------------------------
     // Chai / Mocha configuration.
     // ------------------------------------------------------------------------
+    // Integration
+    chai.use(sinonChai);
+
     // Exports
     window.expect = chai.expect;
 
