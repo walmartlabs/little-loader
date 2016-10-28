@@ -38,6 +38,9 @@ describe("advanced", function () {
       })
       .getText(".e2e-after-load-fourth").then(function (text) {
         expect(text).to.equal("After Load Fourth");
+      })
+      .getText(".e2e-after-setup-fourth").then(function (text) {
+        expect(text).to.equal("After Setup Fourth");
       });
   });
 });
