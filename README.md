@@ -15,7 +15,7 @@ A lightweight, IE8+ JavaScript loader that is **actually tested**...
 * **Tested** all the way down to IE8
 * Reliably **calls back** after script loads
 * Captures script load **errors** down to IE8
-* Really, really **small** (clocking in at `~520` minified + gzipped bytes)
+* Really, really **small** (clocking in at `~519` minified + gzipped bytes)
 * ... and **that's it**!
 
 We currently test:
