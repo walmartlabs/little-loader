@@ -1,6 +1,11 @@
 History
 =======
 
+## Unreleased
+
+* Add options object argument for script mutation (`setup`) ( [@jknight12882][] )
+  [#48](https://github.com/walmartlabs/little-loader/issues/48)
+
 ## 0.1.1
 
 * Optimize for minified, gzipped size. ( [@pygy][] )
@@ -26,5 +31,6 @@ History
 
 * Initial implementation and functional tests.
 
+[@jknight12882]: https://github.com/jknight12882
 [@pygy]: https://github.com/pygy
 [@ryan-roemer]: https://github.com/ryan-roemer
