@@ -1,7 +1,7 @@
 History
 =======
 
-## Unreleased
+## 0.2.0
 
 * Add options object argument for script mutation (`setup`) ( [@jknight12882][] )
   [#48](https://github.com/walmartlabs/little-loader/issues/48)
