@@ -44,6 +44,7 @@
     "karma-requirejs": "^0.2.2",
     "karma-safari-launcher": "^0.1.1",
     "karma-sauce-launcher": "^0.3.0",
+    "karma-sinon": "^1.0.5",
     "karma-spec-reporter": "0.0.24",
     "karma-webpack": "^1.7.0",
     "mocha": "^2.3.4",
@@ -57,6 +58,8 @@
     "saucelabs": "^1.0.1",
     "selenium-standalone": "^4.9.1",
     "server-destroy": "^1.0.1",
+    "sinon": "^1.17.6",
+    "sinon-chai": "^2.8.0",
     "uglify-js": "^2.6.1",
     "webdriverio": "^4.0.3",
     "webpack": "^1.12.9"

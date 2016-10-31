@@ -15,7 +15,7 @@ A lightweight, IE8+ JavaScript loader that is **actually tested**...
 * **Tested** all the way down to IE8
 * Reliably **calls back** after script loads
 * Captures script load **errors** down to IE8
-* Really, really **small** (clocking in at `~474` minified + gzipped bytes)
+* Really, really **small** (clocking in at `~519` minified + gzipped bytes)
 * ... and **that's it**!
 
 We currently test:
@@ -27,6 +27,8 @@ We currently test:
     * Mac: Safari
 
 ### Usage
+
+#### Integration
 
 Alone, little loader attaches to `window._lload` for loading your Javascript:
 
@@ -57,6 +59,37 @@ var load = require("little-loader");
 load("http://example.com/foo.js", function (err) {
   // ... your code ...
 });
+```
+
+#### Calling
+
+Little loader can be called in a number of ways:
+
+```js
+// Load a script and don't worry about a callback
+load("http://foo.com/foo.js");
+
+// Load, then callback (and optionally with context.)
+load("http://foo.com/foo.js", callback);
+load("http://foo.com/foo.js", callback, this);
+
+// Load, call `setup(script)` on the script tag before insertion, no callback
+load("http://foo.com/foo.js", {
+  setup: setup,         // setup(script)
+  context: this         // (optional)
+});
+
+// Load, call `setup(script)` on the script tag before insertion, then
+// callback with context (two ways)
+load("http://foo.com/foo.js", {
+  setup: setup,         // setup(script)
+  callback: callback,   // callback(err)
+  context: this
+});
+load("http://foo.com/foo.js", {
+  setup: setup,         // setup(script)
+  callback: callback    // callback(err)
+}, this);
 ```
 
 ### Installation
