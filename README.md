@@ -75,20 +75,20 @@ load("http://foo.com/foo.js", callback, this);
 
 // Load, call `setup(script)` on the script tag before insertion, no callback
 load("http://foo.com/foo.js", {
-  setup: setup,         // setup(script)
+  setup: setup,         // setup(script: HTMLScriptElement)
   context: this         // (optional)
 });
 
 // Load, call `setup(script)` on the script tag before insertion, then
 // callback with context (two ways)
 load("http://foo.com/foo.js", {
-  setup: setup,         // setup(script)
-  callback: callback,   // callback(err)
+  setup: setup,         // setup(script: HTMLScriptElement)
+  callback: callback,   // callback(err: Error)
   context: this
 });
 load("http://foo.com/foo.js", {
-  setup: setup,         // setup(script)
-  callback: callback    // callback(err)
+  setup: setup,         // setup(script: HTMLScriptElement)
+  callback: callback    // callback(err: Error)
 }, this);
 ```
 
